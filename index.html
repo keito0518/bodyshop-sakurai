@@ -78,13 +78,13 @@
     @keyframes spulse { 0%,100%{opacity:.4} 50%{opacity:1} }
 
     /* ── STATS ── */
-    .stats-band { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 40px 32px; }
-    .stats-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); }
-    .stat-item { text-align: center; padding: 0 20px; border-right: 1px solid var(--border); }
-    .stat-item:last-child { border-right: none; }
-    .stat-num { font-family: var(--fn-disp); font-size: 48px; line-height: 1; letter-spacing: .04em; color: var(--gold); }
-    .stat-unit { font-size: 18px; }
-    .stat-label { font-size: 11px; color: var(--gray); margin-top: 6px; line-height: 1.5; }
+    .stats-band { background: linear-gradient(180deg, var(--surface), #0f0f0f); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 34px 32px; }
+    .stats-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+    .stat-item { min-height: 132px; padding: 22px; border: 1px solid var(--border); background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.01)); position: relative; overflow: hidden; }
+    .stat-item::after { content: ''; position: absolute; inset: auto 18px 0 auto; width: 54px; height: 2px; background: var(--gold); opacity: .8; }
+    .stat-kicker { font-family: var(--fn-en); font-size: 11px; font-weight: 700; letter-spacing: .16em; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; }
+    .stat-num { font-family: var(--fn-ja); font-size: 20px; font-weight: 900; line-height: 1.35; letter-spacing: 0; color: var(--white); }
+    .stat-label { font-size: 12px; color: var(--gray); margin-top: 8px; line-height: 1.65; }
 
     /* ── NEWS ── */
     .news-section { padding: 72px 32px; background: var(--bg); }
@@ -220,22 +220,41 @@
       .contact-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr 1fr; }
       .stats-inner { grid-template-columns: repeat(2,1fr); row-gap: 28px; }
-      .stat-item:nth-child(2) { border-right: none; }
-      .stat-item:nth-child(3) { border-right: 1px solid var(--border); }
     }
     @media (max-width: 640px) {
       nav, .hero, .stats-band, section, .news-section, .about-section, .svc-section, .reviews-section, .map-section, .cta-band, .contact-section { padding-left: 20px; padding-right: 20px; }
       footer { padding-left: 20px; padding-right: 20px; }
       .nav-links, .nav-tel { display: none; }
       .hamburger { display: flex; }
+      .stats-band { padding-top: 22px; padding-bottom: 22px; }
+      .stats-inner { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .stat-item { min-height: 116px; padding: 16px; }
+      .stat-kicker { font-size: 9px; letter-spacing: .12em; margin-bottom: 8px; }
+      .stat-num { font-size: 17px; line-height: 1.35; }
+      .stat-label { font-size: 11px; line-height: 1.55; margin-top: 6px; }
       .svc-grid { grid-template-columns: 1fr; }
-      .news-row { grid-template-columns: 1fr 28px; gap: 8px; }
-      .news-date { display: none; }
-      .news-detail { padding: 0 16px 20px 16px; }
+      .news-section { padding-top: 56px; padding-bottom: 56px; }
+      .news-list { border-top: none; gap: 10px; }
+      .news-item { border: 1px solid var(--border); background: var(--surface); border-radius: 4px; overflow: hidden; }
+      .news-item.open { background: #171717; border-color: rgba(200,169,110,.4); }
+      .news-row { grid-template-columns: auto 1fr 24px; gap: 8px 10px; align-items: start; padding: 16px; }
+      .news-date { display: inline-flex; align-items: center; min-height: 22px; font-size: 10px; color: var(--gold); letter-spacing: .12em; }
+      .news-tag { min-height: 22px; width: max-content; padding: 3px 9px; }
+      .news-text { grid-column: 1 / 3; font-size: 14px; line-height: 1.65; padding-top: 3px; }
+      .news-arrow { grid-column: 3; grid-row: 1 / 3; align-self: center; font-size: 22px; }
+      .news-detail { padding: 0 16px 18px 16px; }
+      .news-detail p { font-size: 13px; line-height: 1.8; }
       .footer-top { grid-template-columns: 1fr; }
       .hero-scroll { display: none; }
       .reviews-head { flex-direction: column; align-items: flex-start; }
       .cta-inner { flex-direction: column; }
+    }
+    @media (max-width: 380px) {
+      .stats-inner { grid-template-columns: 1fr; }
+      .stat-item { min-height: auto; }
+      .news-row { grid-template-columns: 1fr 24px; }
+      .news-date, .news-tag, .news-text { grid-column: 1; }
+      .news-arrow { grid-column: 2; grid-row: 1 / 4; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } .scroll-line { animation: none; } }
   </style>
@@ -313,20 +332,24 @@
 <div class="stats-band">
   <div class="stats-inner">
     <div class="stat-item">
-      <div class="stat-num">相談<span class="stat-unit">歓迎</span></div>
-      <div class="stat-label">小さなキズから<br>事故修理まで</div>
+      <div class="stat-kicker">Body Repair</div>
+      <div class="stat-num">板金塗装</div>
+      <div class="stat-label">キズ・へこみから事故修理まで</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">地域<span class="stat-unit">密着</span></div>
-      <div class="stat-label">旭川市末広の<br>車修理工場</div>
+      <div class="stat-kicker">Inspection</div>
+      <div class="stat-num">車検・整備</div>
+      <div class="stat-label">料金を分かりやすくご案内</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">車検<span class="stat-unit">可</span></div>
-      <div class="stat-label">修理から点検まで<br>まとめて相談</div>
+      <div class="stat-kicker">Auto Land</div>
+      <div class="stat-num">タイヤ・用品</div>
+      <div class="stat-label">ホイール・用品・バッテリー相談</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">見積<span class="stat-unit">無料</span></div>
-      <div class="stat-label">費用と期間を<br>わかりやすく案内</div>
+      <div class="stat-kicker">Insurance</div>
+      <div class="stat-num">保険修理</div>
+      <div class="stat-label">事故後の修理や代車も相談可能</div>
     </div>
   </div>
 </div>
